@@ -1,0 +1,5 @@
+import sys
+import os
+
+name = os.path.basename
+print(name)
