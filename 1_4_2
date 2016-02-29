@@ -1,0 +1,64 @@
+import argparse
+from os import path, listdir
+
+parser = argparse.ArgumentParser(
+    description='Analog Tree'
+)
+
+parser.add_argument(
+    'paths',
+    metavar='FOLDERS',
+    type=str,
+    nargs='+',
+    help='pyti'
+)
+
+parser.add_argument(
+    '-f',
+    '--folders-only',
+    action="store_true",
+    help='papky'
+)
+
+parser.add_argument(
+    '-i',
+    '--includeSOME_TEXT',
+    action="store",
+    help='Elementy s text'
+)
+
+parser.add_argument(
+    '-e',
+    '--excludeSOME_TEXT',
+    action="store",
+    help='Elementy bez texta'
+)
+
+args = parser.parse_args()
+
+names = args.paths
+if args.includeSOME_TEXT:
+    names = [name for name in args.paths if args.i in name]
+if args.excludeSOME_TEXT:
+    names = [name for name in names if not (args.excludeSOME_TEXT in name)]
+
+for name in names:
+    if not path.isdir(name):
+        print("Nevernyi pyt")
+        exit()
+
+for name in names:
+    def tree(pth):
+        a = []
+        files = listdir(pth)
+        if args.includeSOME_TEXT:
+            files = [file for file in files if args.includeSOME_TEXT in file]
+        if args.excludeSOME_TEXT:
+            files = [file for file in files if not (args.excludeSOME_TEXT in file)]
+        for file in files:
+            if path.isdir(pth + "\\" + file):
+                a.append(file + '\n'+ '\n'.join(['   ' + i for i in tree(pth + '/' + file).split('\n')]))
+            elif not args.folders_only:
+                a.append(file)
+        return '\n'.join(a)
+    print(tree(name))
