@@ -18,7 +18,7 @@ parser.add_argument(
     '-a',
     '--action',
     metavar = 'Znak'
-    type = str
+    type = str,
     action = 'store',
     help = 'znak'
 )
