@@ -1,0 +1,30 @@
+# -*- coding: utf8 -*-
+import networkx as nx
+import matplotlib.pyplot as plt
+    
+n = int(input())
+G = nx.Graph()
+i = 0
+
+while i < n:
+    A = list(map(int, input().split()))
+    if len(A) == 1:
+        G.add_node(A[0])
+        i += 1
+    elif len(A) == 2:
+        G.add_edge(A[0], A[1])
+        i += 1
+    elif len(A) == 3:
+        G.add_edge(A[0], A[1], weight=A[2])
+        i += 1
+
+nx.draw(G)
+plt.savefig("simple_path.png")
+plt.show()
+
+B = nx.connected_components(G)
+if len(B) > 1:
+    print('Connected')
+else:
+    print('Not connected')
+print(B)
