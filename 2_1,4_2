@@ -15,7 +15,7 @@ while i < n:
         G.add_edge(A[0], A[1])
         i += 1
     elif len(A) == 3:
-        G.add_edge(A[0], A[1], weight=A[2])
+        G.add_edge(A[0], A[1], weight = A[2])
         i += 1
 
 nx.draw(G)
