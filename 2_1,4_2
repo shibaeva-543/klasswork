@@ -1,26 +1,57 @@
 # -*- coding: utf8 -*-
 import networkx as nx
 import matplotlib.pyplot as plt
-    
-n = int(input())
+
+def dfs(A, U, i, N, pos): 
+    U[i] = True
+    j = 0
+    while A[i][j] != -1: 
+        if U[A[i][j]] == False:
+            U[A[i][j]] = True
+            N[pos][0] = i
+            N[pos][1] = A[i][j]
+            pos += 1
+            dfs(A, U, A[i][j], N, pos)
+
+v = int(input()) 
+n = int(input()) 
 G = nx.Graph()
 i = 0
-
+A = [[-1] * v] * v
+U = [False] * v
+N = [-1, -1] * n
+pos = 0
 while i < n:
-    A = list(map(int, input().split()))
-    if len(A) == 1:
-        G.add_node(A[0])
+    X = list(map(int, input().split()))
+    if len(X) == 1: 
+        G.add_node(X[0])
         i += 1
-    elif len(A) == 2:
-        G.add_edge(A[0], A[1])
+    elif len(X) == 2: 
+        G.add_edge(X[0], X[1])
         i += 1
-    elif len(A) == 3:
-        G.add_edge(A[0], A[1], weight = A[2])
+        j = 0
+        while(A[X[0]][j] != -1):
+            j += 1
+        A[j] = X[1]
+        j = 0
+        while(A[X[1]][j] != -1):
+            j += 1
+        A[j] = X[0]        
+    elif len(X) == 3: 
+        G.add_edge(X[0], X[1], weight=X[2])
         i += 1
-
+        j = 0
+        while(A[X[0]][j] != -1):
+            j += 1
+        A[j] = X[1]
+        j = 0
+        while(A[X[1]][j] != -1):
+            j += 1
+        A[j] = X[0]           
+   
 nx.draw(G)
-plt.savefig("simple_path.png")
-plt.show()
+plt.savefig("simple_path.png") 
+plt.show() 
 
 B = nx.connected_components(G)
 if len(B) > 1:
@@ -28,3 +59,19 @@ if len(B) > 1:
 else:
     print('Not connected')
 print(B)
+
+
+flag = False
+i = 0
+pos = 0
+while not flag:
+    dfs(A, U, i, N, pos)
+    j = 0
+    t = 0
+    while t < v or U[t] != False:
+        t += 1
+    if t == v:
+        flag = True
+
+g = nx.Graph(N)
+nx.draw(g)
