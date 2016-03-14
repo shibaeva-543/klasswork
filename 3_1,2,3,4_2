@@ -9,12 +9,26 @@ def dfs(A, U, i, N, pos):
         if U[A[i][j]] == False:
             U[A[i][j]] = True
             N[pos][0] = i
-            N[pos][1] = A[i][j]
+            N[pos][1] = A[i][j] 
             pos += 1
             dfs(A, U, A[i][j], N, pos)
+        j += 1
+        
+def bfs(Q, A, U, N, pos):
+    while len(Q) > 0:
+        U[Q[0]] = True 
+        j = 0
+        while A[Q[0]][j] != -1: 
+            if U[A[i][j]] == False:
+                Q.append(A[i][j])
+                N[pos][0] = Q[0]
+                N[pos][1] = A[Q[0]][j] 
+                pos += 1
+            j += 1
+        Q.pop(0)
 
-v = int(input()) 
-n = int(input()) 
+v = int(input()) # вводим кол-во вершин
+n = int(input()) # вводим кол-во рёбер и изолированных вершин
 G = nx.Graph()
 i = 0
 A = [[-1] * v] * v
@@ -48,10 +62,11 @@ while i < n:
         while(A[X[1]][j] != -1):
             j += 1
         A[j] = X[0]           
-   
+    
 nx.draw(G)
-plt.savefig("simple_path.png") 
+plt.savefig("simple_path.png")
 plt.show() 
+
 
 B = nx.connected_components(G)
 if len(B) > 1:
@@ -60,18 +75,40 @@ else:
     print('Not connected')
 print(B)
 
-
+# DFS
 flag = False
 i = 0
 pos = 0
+
 while not flag:
     dfs(A, U, i, N, pos)
+    t = 0
+    while t < v or U[t] != False:
+        t += 1
+    if t == v:
+        flag = True
+        
+g = nx.Graph(N)
+nx.draw(g)
+
+# BFS
+Q = []
+U = [False] * v
+flag = False
+i = 0
+pos = 0
+
+while not flag:
+    Q.append(i)
+    bfs(Q, A, U, N, pos)
     j = 0
     t = 0
     while t < v or U[t] != False:
         t += 1
     if t == v:
         flag = True
-
+    else:
+        i = t
+        
 g = nx.Graph(N)
 nx.draw(g)
