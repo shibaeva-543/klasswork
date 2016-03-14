@@ -26,6 +26,17 @@ def bfs(Q, A, U, N, pos):
                 pos += 1
             j += 1
         Q.pop(0)
+        
+def deikstra(Q, A, U, L):
+    while len(Q) > 0:
+        U[Q[0]] = True 
+        j = 0
+        while A[Q[0]][j] != -1: 
+            if U[A[i][j]] == False:
+                Q.append(A[i][j])
+                L[A[i][j]] = L[Q[0]] + 1 
+            j += 1
+        Q.pop(0)      
 
 v = int(input()) # вводим кол-во вершин
 n = int(input()) # вводим кол-во рёбер и изолированных вершин
@@ -112,3 +123,13 @@ while not flag:
         
 g = nx.Graph(N)
 nx.draw(g)
+
+# Deikstra
+Q = []
+U = [False] * v
+L = [-1] * v
+i = int(input())
+L[i] = 0
+Q.append(i)
+deikstra(Q, A, U, L)
+print(L)
