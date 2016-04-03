@@ -14,6 +14,16 @@ def dfs(A, U, i, N, pos):
             dfs(A, U, A[i][j], N, pos)
         j += 1
         
+def dfs_light(A, U, i):
+    U[i] = True
+    j = 0
+    while A[i][j] != -1: 
+          if U[A[i][j]] == False:
+              U[A[i][j]] = True
+              dfs_light(A, U, A[i][j])
+          j += 1    
+    
+        
 def bfs(Q, A, U, N, pos):
     while len(Q) > 0:
         U[Q[0]] = True 
@@ -38,16 +48,20 @@ def deikstra(Q, A, U, L):
             j += 1
         Q.pop(0)      
 
-v = int(input()) # вводим кол-во вершин
-n = int(input()) # вводим кол-во рёбер и изолированных вершин
+fin = open('input.txt', 'r')
+X = fin.readline().split()
+v = int(X[0]) # вводим кол-во вершин
+n = int(X[1]) # вводим кол-во рёбер и изолированных вершин
 G = nx.Graph()
 i = 0
-A = [[-1] * v] * v
+A = [0] * v
+for q in range(v):
+    A[q] = [-1] * v
 U = [False] * v
 N = [-1, -1] * n
 pos = 0
 while i < n:
-    X = list(map(int, input().split()))
+    X = fin.readline().split()
     if len(X) == 1: 
         G.add_node(X[0])
         i += 1
@@ -133,3 +147,18 @@ L[i] = 0
 Q.append(i)
 deikstra(Q, A, U, L)
 print(L)
+
+# Components of connection
+counter = 0
+flag = False
+U = [False] * v
+i = 0
+while not flag:
+    dfs_light(A, U, i)
+    counter += 1
+    flag = True
+    for j in range(v):
+        if U[j] == False:
+            flag = False
+            i = j
+print(counter)
