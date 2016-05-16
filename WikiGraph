@@ -10,10 +10,10 @@ import statistics
 
 class WikiGraph:
 
-    def load_from_file(self, filename):
-        print('Downloading the graph form file ' + filename)
+    def load_from_file(self, wiki.txt):
+        print('Downloading the graph form file ' + wiki.txt)
 
-        with open(filename) as fin:
+        with open(wiki.txt) as fin:
             A = fin.readline().split()
             self.m = int(A[0])
             self.n = int(A[1])
