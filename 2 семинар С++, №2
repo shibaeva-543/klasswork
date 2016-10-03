@@ -1,1 +1,64 @@
 
+//task bissection
+
+#include <iostream>
+#include <cmath>
+
+using namespace std; 
+
+float func(float x)
+{
+    return exp(x) - 1 - cos(x);
+}
+
+int sign(float x)
+{
+    if(x > 0){return 1;}
+    else
+    {
+        if(x < 0)
+        {
+            return -1;
+        }
+        else return 0;
+    }
+}
+
+float ans(float a, float b, float accuracy)
+{
+    float med = (a + b) / 2;
+    if((func(med) * sign(func(med))) < accuracy)
+    {
+        cout << func(med) << " " << sign(func(med)) << "\n";
+        return med;
+    }
+    else
+    {
+        if(sign(a) == 0) {return a;}
+        if(sign(b) == 0) {return b;}
+        if(sign(a) != sign(med))
+        {
+            return ans(a, med, accuracy);
+        }
+        else
+        {
+            if (sign(b) != sign(med))
+            {
+                return ans(med, b, accuracy);
+            }
+            else
+            {
+                cout << "No answers!";
+                return med;
+            }
+        }
+    }
+}
+
+int main()
+{
+    float a, b, accuracy = 0.1;
+    cin >> a >> b;
+    cout << ans(a, b, accuracy);
+    return 0;
+}
