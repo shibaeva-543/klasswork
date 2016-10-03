@@ -1,1 +1,19 @@
+#include <iostream>
 
+using namespace std;
+
+void bad_incrementor(int x)
+{
+        x++;
+        cout << "x changed: " << x << endl;
+        return; // example was without it, but I hope it was a bad joke...
+}
+
+int main()
+{
+    int x;
+    cin >> x;
+    bad_incrementor(x);
+    cout << "x basic: " << x << endl;
+    return 0;
+}
