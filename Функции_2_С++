@@ -1,1 +1,21 @@
 
+#include <iostream>
+
+using namespace std;
+
+void good_incrementor(int *x)
+{
+    x++;
+    return;
+}
+
+int main()
+{
+        int x;
+        x = 1;
+        cout << "x initial: " << x << endl;
+        good_incrementor(&x);
+        cout << "x changed: " << x << endl;
+
+        return 0;
+}
