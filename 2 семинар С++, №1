@@ -1,1 +1,45 @@
 
+#include <iostream>
+#include <vector>
+
+#define push push_back
+
+using namespace std;
+
+vector <int> sorting(vector <int> A)
+{
+    if(A.size() < 2) {return A;}
+    else{
+        int med;
+        med = A[0];
+        vector <int> Prev, Med, Post;
+        for(int i = 0; i < A.size(); i++)
+        {
+            if(A[i] < med){Prev.push(A[i]);}
+            else{if(A[i] > med){Post.push(A[i]);} else Med.push(A[i]);}
+        }
+        Prev = sorting(Prev);
+        Post = sorting(Post);
+        Prev.insert(Prev.end(), Med.begin(), Med.end());
+        Prev.insert(Prev.end(), Post.begin(), Post.end());
+        return Prev;
+    }
+}
+
+int main()
+{
+    vector <int> V;
+    int a;
+    cin >> a;
+    while(a != 0)
+    {
+        V.push(a);
+        cin >> a; 
+    }
+    V = sorting(V);
+    for(int i = 0; i < V.size(); i++)
+    {
+        cout << V[i] << " ";
+    }
+    return 0;
+}
